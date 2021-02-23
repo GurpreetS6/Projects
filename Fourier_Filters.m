@@ -1,3 +1,4 @@
+% Fourier Signals
 clc, clear all, close all, tic
 syms n analytical_a(n) analytical_b(n) x
 % Formulas
