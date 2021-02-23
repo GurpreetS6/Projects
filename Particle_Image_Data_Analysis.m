@@ -5,7 +5,7 @@ close all;
 
 n = 399; % number of text files in folder i.e. number of frames in folder
 for i = 1:n; 
-    
+    % reading files 
     if i < 10;
         datfile = ['PIVlab_000' num2str(i) '.txt']
         fid = fopen(datfile, 'r');                    
@@ -17,7 +17,7 @@ for i = 1:n;
         vor(i,:) = A{5};
         fclose(fid);
     end
-       
+    % reading files
     if i >= 10 && i < 100;
         datfile = ['PIVlab_00' num2str(i) '.txt']
         fid = fopen(datfile, 'r');                    
@@ -29,7 +29,7 @@ for i = 1:n;
         vor(i,:)= A{5};
         fclose(fid);
     end
-    
+    % reading files
     if i >= 100 && i < 1000;
         datfile = ['PIVlab_0' num2str(i) '.txt']
         fid = fopen(datfile, 'r');                    
@@ -41,7 +41,7 @@ for i = 1:n;
         vor(i,:) = A{5};
         fclose(fid);
     end
-    
+    % reading files
     if i >= 1000;
         datfile = ['PIVlabs_' num2str(i) '.txt']
         fid = fopen(datfile, 'r');                    
@@ -58,7 +58,7 @@ for i = 1:n;
     
 end
 
-
+% Making a folder for the results of collected data
 mkdir Results
 
 cd Results
@@ -74,6 +74,8 @@ u = load('u.mat');
 u = struct2cell(u);
 u = cell2mat(u);
 u = u(:,1150);
+
+% formatting
 figure();
 set(gcf, 'Units', 'Normalized', 'OuterPosition', [0.1 0.1 0.6 0.9]);
 subplot(3,1,1)
@@ -82,6 +84,7 @@ title('Velocity (u) at y/R = 0, with respect to Time');
 xlabel('Time (s)');
 ylabel('u (m/s)');
 
+% formatting rows/finding unique values and reshaping data
 u = load('u.mat');
 u = struct2cell(u);
 u = cell2mat(u);
@@ -92,6 +95,7 @@ y = unique(y);
 u = u(200,:);
 u = reshape(u,[39, 59]);
 
+% plotting and formatting
 subplot(3,1,2)
 contourf(x,y,u,'LineStyle','none')
 grid on;
@@ -101,6 +105,7 @@ title('Contour Plot of u')
 h = colorbar();
 ylabel(h, 'u (m/s)')
 
+% formatting rows/finding unique values and reshaping data
 t = load('t.mat');
 t = struct2cell(t);
 t = cell2mat(t);
@@ -109,11 +114,13 @@ u = struct2cell(u);
 u = cell2mat(u);
 u_original = u;
 
+% creating array for specific rows/columns
 x = x(1,:);
 y = y(1,:);
 x_original = unique(x);
 y_original = unique(y);
 
+% converting and restructing rows and specific cells
 x = load('x.mat');
 x = struct2cell(x);
 x = cell2mat(x);
@@ -121,6 +128,7 @@ y = load('y.mat');
 y = struct2cell(y);
 y = cell2mat(y);
 
+% plotting and creating the animation file for 60 seconds of the data
 subplot(3,1,3)
 for i = 1:length(t)
     Frame_Count = i
@@ -147,10 +155,14 @@ for i = 1:length(t)
 end
 
 %% V plot and contour with animation
+
+% formatting
 v = load('v.mat');
 v = struct2cell(v);
 v = cell2mat(v);
 v = v(:,1150);
+
+% formatting rows/finding unique values and reshaping data
 figure();
 set(gcf, 'Units', 'Normalized', 'OuterPosition', [0.15 0.15 0.8 0.8]);
 subplot(2,2,1)
@@ -165,6 +177,7 @@ xlabel('Time (s)');
 ylabel('v (m/s)');
 ylim([-1 1])
 
+% formatting rows/finding unique values and reshaping data
 v = load('v.mat');
 v = struct2cell(v);
 v = cell2mat(v);
@@ -175,16 +188,17 @@ y = unique(y);
 v = v(200,:);
 v = reshape(v,[39, 59]);
 
+% plotting and formatting
 subplot(2,2,2)
 contourf(x,y,v,'LineStyle','none')
 grid on;
-
 xlabel('x (m)')
 ylabel('y (m)')
 title('Contour Plot of v')
 h = colorbar();
 ylabel(h, 'v (m/s)')
 
+% formatting rows/finding unique values and reshaping data
 t = load('t.mat');
 t = struct2cell(t);
 t = cell2mat(t);
@@ -197,6 +211,7 @@ y = y(1,:);
 x_original = unique(x);
 y_original = unique(y);
 
+% converting and restructing rows and specific cells
 x = load('x.mat');
 x = struct2cell(x);
 x = cell2mat(x);
@@ -204,6 +219,8 @@ y = load('y.mat');
 y = struct2cell(y);
 y = cell2mat(y);
 subplot(2,2,4)
+
+% plotting and creating the animation file for 60 seconds of the data
 for i = 1:length(t)
     Frame_Count = i
     v = reshape(v_original(i,:), [39, 59]);
@@ -240,6 +257,7 @@ title('Velocity (vorticity) at y/R = 0, with respect to Time');
 xlabel('Time (s)');
 ylabel('Vorticity (1/s)');
 
+% formatting rows/finding unique values and reshaping data
 vor = load('vor.mat');
 vor = struct2cell(vor);
 vor = cell2mat(vor);
@@ -250,20 +268,22 @@ y = unique(y);
 vor = vor(300,:);
 vor = reshape(vor,[39, 59]);
 
+% plotting
 subplot(3,1,2)
 contourf(x,y,vor,'LineStyle','none')
 grid on;
 
+% plotting and formatting
 xlabel('x (m)')
 ylabel('y (m)')
 title('Contour Plot of Vorticity')
 h = colorbar();
 ylabel(h, 'Vorticity (1/s)')
-
 t = load('t.mat');
 t = struct2cell(t);
 t = cell2mat(t);
 
+% formatting rows/finding unique values and reshaping data
 x = x(1,:);
 y = y(1,:);
 x_original = unique(x);
@@ -272,6 +292,8 @@ vor = load('vor.mat');
 vor = struct2cell(vor);
 vor = cell2mat(vor);
 vor_original = vor;
+
+% converting and restructing rows and specific cells
 x = load('x.mat');
 x = struct2cell(x);
 x = cell2mat(x);
@@ -279,6 +301,8 @@ y = load('y.mat');
 y = struct2cell(y);
 y = cell2mat(y);
 subplot(3,1,3)
+
+% plotting and creating the animation file for 60 seconds of the data
 for i = 1:length(t)
     Frame_Count = i
     vor = reshape(vor_original(i,:), [39, 59]);
