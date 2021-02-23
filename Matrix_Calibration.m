@@ -1,5 +1,4 @@
  %% Camera Calibration
-% November 2011
 % This program determines all calibartion coefficients Lij of A & B 
 % Input data  xs, ys and non-coplanar Xw, Yw, Zw
 %It yields all camera paameter
