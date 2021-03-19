@@ -12,44 +12,46 @@
 clear all 
 close all
 clc
-I1 = imread('11x11.tiff');   
-[Ir, Ic]=size(I1)
- IARstart=1;
+I1 = imread('11x11.tiff');   % reading in image
+[Ir, Ic]=size(I1) % matrix size
+ IARstart=1; % defining starting parameters
  IARfin=Ir;
  IACstart=1;
  IACfin=Ic;
    Ic = I1(IARstart:IARfin,IACstart:IACfin);
    [RA, CA]=size (Ic);
-%    figure(2)
+%    figure(2) % figure
 %
-% Ic = imcrop(I1,[140 150 400 500]) ;
+% Ic = imcrop(I1,[140 150 400 500]) ; % cropping image
  %%a= imread('right.tif');
 % a=imcrop(a1,[82 64 11 9]);
 % a=imread('cross2.jpg');
 % a=255-a;
-% a=255-a1;
-imshow(Ic);
+% a=255-a1; 
+imshow(Ic); % display image
 [x(1,1),y(1,1)]=ginput(1)
 %x(1,1);
 hold on
-plot(x(1,1),y(1,1),'+b')
+plot(x(1,1),y(1,1),'+b') % plot values on image
 
-[x(2,1),y(2,1)]=ginput(1)
+[x(2,1),y(2,1)]=ginput(1) % plot values on image depending on image size
 hold on
 plot(x(2,1),y(2,1),'+b')
 
-drawnow
+drawnow % auto updates figure
 
-xmin = min(x)
-xmax = max(x)
-ymin = min(y)
-ymax = max(y)
+xmin = min(x) % minimum x value
+xmax = max(x) % maximum x value
+ymin = min(y) % minimum y value
+ymax = max(y) % maximum y value
 
+% assigning lines based on min max values
 lowerline=[xmin ymin; xmax ymin];
 upperline=[xmin ymax; xmax ymax];
 leftline=[xmin ymin; xmin ymax];
 rightline=[xmax ymin; xmax ymax];
 
+% plotting lines based on min max values
 plot(lowerline(:,1),lowerline(:,2),'-r')
 plot(upperline(:,1),upperline(:,2),'-r')
 plot(leftline(:,1),leftline(:,2),'-r')
@@ -60,10 +62,10 @@ a = Ic(ymin:ymax,xmin:xmax);
 
 %% find the centroids of marks AFTER correlation
 %imtool(a)
-figure(2), imshow(Ic);
+figure(2), imshow(Ic); % show updated image
 
 figure(3), imshow(a);
-
+% loop through and find the best value to detect dots on screen
 c = normxcorr2(a,Ic);
 %figure, surf(c), shading flat
     sc = size(c); C = zeros(size(c));
@@ -75,7 +77,7 @@ c = normxcorr2(a,Ic);
         end
     end
 L = bwlabel(C,8) ;%I,[low high])find(0 < x & x < 10*pi)
-s  = regionprops(L, 'centroid');
+s  = regionprops(L, 'centroid'); % find centroid of dot
 centroids = cat(1, s.Centroid); 
 corr_offset = [ centroids(:,1)-size(a,2)/2 centroids(:,2)-size(a,1)/2]; 
 %close all; 
@@ -84,6 +86,7 @@ hold all;
 plot(corr_offset(:,1),corr_offset(:,2),'+r')
 %plot(centroids(1:5,1),centroids(1:5,2),'ob')
 
+% correlation offset variables
 xc1=corr_offset(1:end,1);
 yc1=corr_offset(1:end,2);
 lx=length(xc1)
@@ -150,10 +153,10 @@ ly=length(yc1)
 % Kdata=[Dx,Dy]
 %corr_offset=Kdata;
 nd=0;% number of points to delete from bottom i.e. last nd of , yc array.
-figure (28)
+figure (28) % new image
 imshow(Ic);
 hold all
-plot(corr_offset(1:lx-nd,1),corr_offset(1:ly-nd,2),'og')
+plot(corr_offset(1:lx-nd,1),corr_offset(1:ly-nd,2),'og') % plot and determine location of next dots
 plot(corr_offset(1:2,1),corr_offset(1:2,2),'oy')
 xc=corr_offset(1:lx-nd,1)
 yc=corr_offset(1:lx-nd,2)
@@ -162,19 +165,19 @@ save('OUTA_Left.txt','out_C1','-ascii')
 % xc=corr_offset(:,1)
 % yc=corr_offset(:,2)
 out_xcyc=[xc(1:length(xc-1)),yc(1:length(xc-1))];
-Ng=[11,11,11,11,11,11,11,11,11,11,11];
-dX=20;
+Ng=[11,11,11,11,11,11,11,11,11,11,11]; % array depending on the size of dots on screen 11x11
+dX=20; % change based on image
 dY=20
-for j=1:1:11
-k1(j)=sum((Ng(1:1:j)))
+for j=1:1:11 % iterate through numbers
+k1(j)=sum((Ng(1:1:j))) 
 end
-rxc=reshape(xc,11,11)
+rxc=reshape(xc,11,11) % reshape matrix to 11x11
 rxc=rxc;
 %diff(rxc(1,:))
 % [Dxx,Dxy]=gradient(rxc)
 ryc=reshape(yc,11,11)
 
-[rycn, I]=sort(ryc,'descend');
+[rycn, I]=sort(ryc,'descend'); % descending dots on image
 for j2=1:1:11
 rxcn(:,j2)=rxc(I(:,j2),j2)
  end
