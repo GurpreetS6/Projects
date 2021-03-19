@@ -11,8 +11,8 @@
 clear all 
 close all
 clc
-I1 = imread('11x11_3D.tiff');   
-[Ir, Ic]=size(I1)
+I1 = imread('11x11_3D.tiff');   % reading in 3D image file
+[Ir, Ic]=size(I1) % sizing image
  IARstart=1;
  IARfin=Ir;
  IACstart=1;
@@ -27,24 +27,24 @@ I1 = imread('11x11_3D.tiff');
 % a=imread('cross2.jpg');
 % a=255-a;
 % a=255-a1;
-imshow(Ic);
+imshow(Ic);   % selecting and finding first dot on the image
 [x(1,1),y(1,1)]=ginput(1)
 %x(1,1);
 hold on
 plot(x(1,1),y(1,1),'+b')
 
-[x(2,1),y(2,1)]=ginput(1)
+[x(2,1),y(2,1)]=ginput(1) % selecting and finding second dot on the image
 hold on
 plot(x(2,1),y(2,1),'+b')
 
 drawnow
-xmin = min(x)
-xmax = max(x)
-ymin = min(y)
-ymax = max(y)
+xmin = min(x) % minimum x value
+xmax = max(x) % maximum x value
+ymin = min(y) % minimum y value
+ymax = max(y) % maximum y value
 
-lowerline=[xmin ymin; xmax ymin];
-upperline=[xmin ymax; xmax ymax];
+lowerline=[xmin ymin; xmax ymin]; 
+upperline=[xmin ymax; xmax ymax]; 
 leftline=[xmin ymin; xmin ymax];
 rightline=[xmax ymin; xmax ymax];
 
