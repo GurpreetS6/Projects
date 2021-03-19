@@ -43,11 +43,13 @@ xmax = max(x) % maximum x value
 ymin = min(y) % minimum y value
 ymax = max(y) % maximum y value
 
+% assigning lines based on min max values
 lowerline=[xmin ymin; xmax ymin]; 
 upperline=[xmin ymax; xmax ymax]; 
 leftline=[xmin ymin; xmin ymax];
 rightline=[xmax ymin; xmax ymax];
 
+% plotting lines based on min max values
 plot(lowerline(:,1),lowerline(:,2),'-r')
 plot(upperline(:,1),upperline(:,2),'-r')
 plot(leftline(:,1),leftline(:,2),'-r')
@@ -58,13 +60,14 @@ a = Ic(ymin:ymax,xmin:xmax);
 
 %% find the centroids of marks AFTER correlation
 %imtool(a)
-figure(2), imshow(Ic);
-
+figure(2), imshow(Ic);  % show updated image
+ 
 figure(3), imshow(a);
 
 c = normxcorr2(a,Ic);
 %figure, surf(c), shading flat
     sc = size(c); C = zeros(size(c));
+% loop through and find the best value to detect dots on screen
     for ii=1:sc(1)
         for jj=1:sc(2)
             if c(ii,jj) > 0.6488000355 & c(ii,jj)<.99
@@ -144,16 +147,16 @@ Ldata(:,2)=yc;
 % Dy(p) = []
 % Kdata=[Dx,Dy]
 %corr_offset=Kdata;
-figure (28)
+figure (28) 
 imshow(Ic);
 hold all
-plot(corr_offset(1:50,1),corr_offset(1:50,2),'og')
+plot(corr_offset(1:50,1),corr_offset(1:50,2),'og') % offset image
  out_Centr1=[corr_offset];
 %save('OUTA_Left.txt','out_Centr1','-ascii')
 xc=corr_offset(:,1)
 yc=corr_offset(:,2)
 out_xcyc=[xc(1:length(xc-1)),yc(1:length(xc-1))];
-Ng=[11,11,11,11,11,11,11,11,11,11,11];
+Ng=[11,11,11,11,11,11,11,11,11,11,11]; % 11x11 matrix
 dX=20;
 dY=20;
 for j=1:1:11
@@ -165,6 +168,7 @@ Y(1:k1(1))=-[5,4,3,2,1,0,-1,-2,-3,-4,-5];% Positive Y is downwards!
 Z(1:k1(1)-7)=0;
 Z(k1(1)-6:k1(1))=12;
 %2column
+% making dots in form of matrix and assigning them values
 X(1+k1(1):k1(2))=-4;
 Y(1+k1(1):k1(2))=-[5,4,3,2,1,0,-1,-2,-3,-4,-5];
 Z(1+k1(1):k1(2)-7)=0;
@@ -208,13 +212,13 @@ Z(1+k1(9):k1(10))=0;
 X(1+k1(10):k1(11))=5;
 Y(1+k1(10):k1(11))=-[5,4,3,2,1,0,-1,-2,-3,-4,-5];
 Z(1+k1(10):k1(11))=0;
-
+% load values in from 2D answers
 W = load('OUTA_Left.txt');
 X = W(:,1);
 Y = W(:,2);
 %outXYZ=[X', Y', Z']
 out_xcyc=[xc(1:length(xc-1)),yc(1:length(xc-1)),dX*X, dY*Y, Z'];
-
+% save data into new txt files
 save('StatNewPlate_out_xs_ys_LeftREF_Crosses.txt','out_xcyc','-ascii')%
 save('zvalues.txt','Z','-ascii')
 %save('StaticAlu_out_xs_ys_WhiteLeft1_0.txt','out_xcyc','-ascii')
