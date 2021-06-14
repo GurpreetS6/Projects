@@ -74,6 +74,7 @@ figure()
 % formatting and labelling
 subplot(3,1,1)
 plot(x,solved_TS)
+% all labels
 title('Original Signal')
 xlabel('Frequency')
 ylabel('Amplitude')
@@ -91,6 +92,7 @@ set(gcf, 'Units', 'Normalized', 'OuterPosition', [0.25 0.25 0.5 0.5]);
 cf = 6; % Testing cf values, 6 works well
 f = cf/(fs/2);
 figure()
+% need toolbox for butter
 [b a] = butter(5, f);
 filter = filtfilt(b,a,signal); % filter
 subplot(3,1,1)
@@ -114,6 +116,7 @@ grid on
 p=1;
  z=0;
  figure()
+ % plotting
 for s = 1:2:7
  noise = s+(s+s).*rand(size(x));
  signal = noise + solved_TS;
