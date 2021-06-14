@@ -8,7 +8,7 @@
 %at the small area of image a with +. Thus it returns the value of the
 %fuction at the location of the +.
 % Three 3-D target plates is used which requires manual introduction of outof
-% plane dispalcements.
+% plane displacements. 
 clear all 
 close all
 clc
