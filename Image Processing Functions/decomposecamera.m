@@ -6,10 +6,10 @@
 %
 % Argument:  P - 3 x 4 camera projection matrix
 % Returns:   
-%            K - Calibration matrix of the form
+%            K - Calibration matrix of the form - ax
 %                  |  ax   s   ppx |
 %                  |   0   ay  ppy |
-%                  |   0   0    1  |
+%                  |   0   0    1  | 
 %
 %                Where: 
 %                ax = f/pixel_width and ay = f/pixel_height,
